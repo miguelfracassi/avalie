@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Avalie o atendimento</title>
+<meta name="description" content="Avalie o atendimento do Rafael e envie seu feedback direto pelo WhatsApp.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%231b17ff'/%3E%3Cpath d='M28 66 40 34l10 22 10-22 12 32' stroke='%23f4f3f7' stroke-width='7' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #0e0c1f;
+    --ink-soft: #56536e;
+    --blue: #1b17ff;
+    --lime: #d7ff3f;
+    --paper: #f4f3f7;
+    --white: #ffffff;
+    --line: #dfdce8;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Inter", -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2, .wordmark { font-family: "Space Grotesk", "Inter", sans-serif; letter-spacing: -0.01em; }
+
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
+  img, svg { display: block; max-width: 100%; }
+
+  .wrap { width: 100%; max-width: 560px; margin: 0 auto; padding: 0 24px; box-sizing: border-box; }
+
+  /* nav */
+  header {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(244,243,247,0.86);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .nav-row { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+  .wordmark { font-size: 1.1rem; font-weight: 700; display: flex; align-items: center; gap: 9px; text-decoration: none; }
+  .wordmark .mark {
+    width: 26px; height: 26px; border-radius: 7px; background: var(--blue);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .wordmark .mark svg { width: 15px; height: 15px; }
+  .cta {
+    text-decoration: none; font-size: 0.86rem; font-weight: 600; color: var(--white);
+    background: var(--blue); padding: 10px 16px; border-radius: 9px; white-space: nowrap;
+  }
+
+  /* intro */
+  .intro { padding: 52px 0 8px; text-align: center; }
+  .intro .kicker {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 0.9rem; font-weight: 600; color: var(--blue); margin: 0 0 18px;
+    justify-content: center; width: 100%;
+  }
+  .intro .kicker::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--lime); }
+
+  .avatar {
+    width: 108px; height: 108px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: 0 auto 20px;
+    border: 3px solid var(--white);
+    box-shadow: 0 0 0 1px var(--line);
+  }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; }
+
+  .intro h1 { font-size: clamp(1.5rem, 5vw, 1.9rem); line-height: 1.2; font-weight: 600; margin: 0 0 8px; }
+  .intro .role { font-size: 0.92rem; color: var(--ink-soft); margin: 0 0 18px; }
+  .intro p.desc {
+    font-size: 0.98rem; line-height: 1.6; color: var(--ink-soft);
+    max-width: 42ch; margin: 0 auto; text-align: center;
+  }
+
+  /* card */
+  main { padding: 40px 0 20px; }
+
+  .card {
+    background: var(--white);
+    border: 1px solid var(--line);
+    border-radius: 18px;
+    padding: 30px 26px;
+  }
+
+  .card label {
+    display: block;
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 14px;
+    text-align: center;
+  }
+
+  .stars {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+  .stars button {
+    background: none;
+    border: none;
+    padding: 2px;
+    cursor: pointer;
+    line-height: 0;
+  }
+  .stars svg {
+    width: 38px; height: 38px;
+    stroke: var(--line);
+    stroke-width: 1.5;
+    fill: none;
+    transition: fill 0.12s ease, stroke 0.12s ease, transform 0.12s ease;
+  }
+  .stars button:hover svg { transform: scale(1.06); }
+  .stars svg.filled { fill: var(--lime); stroke: #b7d600; }
+
+  .stars-caption {
+    text-align: center;
+    font-size: 0.86rem;
+    color: var(--ink-soft);
+    min-height: 20px;
+    margin: 0 0 26px;
+  }
+
+  textarea {
+    width: 100%;
+    font-family: inherit;
+    font-size: 0.95rem;
+    color: var(--ink);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 14px 16px;
+    resize: vertical;
+    min-height: 96px;
+    margin-bottom: 20px;
+  }
+  textarea:focus { outline: 2px solid var(--blue); outline-offset: 1px; }
+  textarea::placeholder { color: var(--ink-soft); opacity: 0.8; }
+
+  .send-btn {
+    width: 100%;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    font-family: inherit;
+    font-size: 0.98rem;
+    font-weight: 600;
+    color: var(--white);
+    background: var(--ink);
+    border: none;
+    border-radius: 12px;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: opacity 0.15s ease, transform 0.1s ease;
+  }
+  .send-btn:active { transform: scale(0.99); }
+  .send-btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .send-btn svg { width: 18px; height: 18px; }
+
+  .hint {
+    text-align: center;
+    font-size: 0.82rem;
+    color: var(--ink-soft);
+    margin: 14px 0 0;
+  }
+
+  footer { padding: 40px 0 56px; }
+  footer .wrap { border-top: 1px solid var(--line); padding-top: 28px; }
+  footer p { font-size: 0.84rem; color: var(--ink-soft); margin: 0; text-align: center; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="nav-row">
+      <a class="wordmark" href="index.html">
+        <span class="mark">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#f4f3f7" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17 8 7l4 10 4-10 4 10"/></svg>
+        </span>
+        Digital Wow
+      </a>
+      <a class="cta" href="https://discord.gg/JGNvwZmnrH" target="_blank" rel="noopener">Entrar no Discord</a>
+    </div>
+  </div>
+</header>
+
+<div class="intro">
+  <div class="wrap">
+    <p class="kicker">Avaliação de atendimento</p>
+    <div class="avatar">
+      <img src="rafael.png" alt="Foto do Rafael">
+    </div>
+    <h1>Como foi o vídeo e atendimentos com o Rafael?</h1>
+    <p class="role">Atendimento</p>
+    <p class="desc">Sua opinião ajuda a gente a melhorar. Dê uma nota e, se quiser, deixe um comentário — depois é só enviar pelo WhatsApp.</p>
+  </div>
+</div>
+
+<main>
+  <div class="wrap">
+    <div class="card">
+      <label>Sua nota</label>
+      <div class="stars" id="stars">
+        <button type="button" data-value="1" aria-label="1 estrela"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.6l-5.9 3.1 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></button>
+        <button type="button" data-value="2" aria-label="2 estrelas"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.6l-5.9 3.1 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></button>
+        <button type="button" data-value="3" aria-label="3 estrelas"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.6l-5.9 3.1 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></button>
+        <button type="button" data-value="4" aria-label="4 estrelas"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.6l-5.9 3.1 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></button>
+        <button type="button" data-value="5" aria-label="5 estrelas"><svg viewBox="0 0 24 24"><path d="M12 2.5l2.9 6.1 6.6.9-4.8 4.6 1.2 6.6L12 17.6l-5.9 3.1 1.2-6.6L2.5 9.5l6.6-.9z"/></svg></button>
+      </div>
+      <p class="stars-caption" id="stars-caption">Toque em uma estrela para avaliar</p>
+
+      <label for="feedback-text">Comentário (opcional)</label>
+      <textarea id="feedback-text" placeholder="Conte como foi o atendimento..."></textarea>
+
+      <button type="button" class="send-btn" id="send-btn" disabled>
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.6-.8-1.9-.9-.2-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.3.4-.5.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5C11.4 9.4 11 8.4 10.8 8c-.2-.4-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.2.3-.9.9-.9 2.1 0 1.2.9 2.4 1 2.6.1.2 1.8 2.7 4.3 3.8.6.3 1.1.4 1.4.5.6.2 1.2.2 1.6.1.5-.1 1.6-.6 1.8-1.3.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3z"/><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.1-1.3A10 10 0 1 0 12 2zm0 18.2c-1.6 0-3.1-.4-4.4-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 20.2 12 8.2 8.2 0 0 1 12 20.2z"/></svg>
+        Enviar avaliação pelo WhatsApp
+      </button>
+      <p class="hint">Isso vai abrir o WhatsApp com sua avaliação já escrita — é só conferir e enviar.</p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 Digital Wow. Todos os direitos reservados.</p>
+  </div>
+</footer>
+
+<script>
+  var selectedRating = 0;
+  var stars = document.querySelectorAll('#stars button');
+  var caption = document.getElementById('stars-caption');
+  var sendBtn = document.getElementById('send-btn');
+  var feedbackEl = document.getElementById('feedback-text');
+  var labels = ['', 'Ruim', 'Regular', 'Bom', 'Muito bom', 'Excelente'];
+
+  function paintStars(value) {
+    stars.forEach(function (btn) {
+      var svg = btn.querySelector('svg');
+      var v = parseInt(btn.getAttribute('data-value'), 10);
+      svg.classList.toggle('filled', v <= value);
+    });
+  }
+
+  stars.forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      selectedRating = parseInt(btn.getAttribute('data-value'), 10);
+      paintStars(selectedRating);
+      caption.textContent = selectedRating + ' de 5 — ' + labels[selectedRating];
+      sendBtn.disabled = false;
+    });
+    btn.addEventListener('mouseenter', function () {
+      paintStars(parseInt(btn.getAttribute('data-value'), 10));
+    });
+    btn.addEventListener('mouseleave', function () {
+      paintStars(selectedRating);
+    });
+  });
+
+  sendBtn.addEventListener('click', function () {
+    if (selectedRating === 0) return;
+
+    var starLine = '⭐'.repeat(selectedRating) + ' (' + selectedRating + '/5)';
+    var feedback = feedbackEl.value.trim();
+    if (!feedback) feedback = 'Nenhum comentário adicional.';
+
+    var message = '⚡ *Programa WowAvaliou: Nova avaliação de Rafael*\n\n' +
+      '* Estrelas: ' + starLine + '\n' +
+      '* Feedback Escrito: ' + feedback;
+
+    var url = 'https://wa.me/19999894031?text=' + encodeURIComponent(message);
+    window.open(url, '_blank');
+  });
+</script>
+
+</body>
+</html>
